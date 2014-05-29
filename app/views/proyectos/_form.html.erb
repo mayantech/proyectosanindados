@@ -1,0 +1,40 @@
+<%= nested_form_for @proyecto do |f| %>
+  <% if @proyecto.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@proyecto.errors.count, "error") %> prohibited this proyecto from being saved:</h2>
+
+      <ul>
+      <% @proyecto.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nombre %><br>
+    <%= f.text_field :nombre %>
+  </div>
+  <div class="field">
+    <%= f.label :fecha_entrega %><br>
+    <%= f.date_select :fecha_entrega %>
+  </div>
+  <fieldset id="tareas">
+    <%= f.fields_for :tareas do |tf| %>
+      <div class="field">
+        <%= tf.label :nombre, 'Nombre de la tarea' %><br>
+        <%= tf.text_field :nombre %>
+      </div>
+      <div class="field">      
+        <%= tf.label :prioridad %><br>
+        <%= tf.text_field :prioridad %>
+      </div>
+      <%= tf.link_to_remove "Eliminar esta tarea" %>
+    <% end %>
+    <p><%= f.link_to_add "Agregar una tarea", :tareas %></p>
+  </fieldset>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
